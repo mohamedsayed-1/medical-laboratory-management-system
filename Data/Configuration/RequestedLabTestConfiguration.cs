@@ -15,7 +15,7 @@ namespace Medical_Laboratory_Management_System.Data.Configuration
                 .HasConversion<string>()
                 .HasColumnName("Status")
                 .IsRequired();
-            builder.Property(x => x.LabTestStatus)
+            builder.Property(x => x.LabTestResult)
                 .HasPrecision(18, 4)
                 .IsRequired();
 
