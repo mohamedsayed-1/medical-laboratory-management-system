@@ -1,4 +1,5 @@
 using Medical_Laboratory_Management_System.Data;
+using Medical_Laboratory_Management_System.Services;
 using Microsoft.EntityFrameworkCore;
 
 namespace Medical_Laboratory_Management_System
@@ -18,6 +19,8 @@ namespace Medical_Laboratory_Management_System
                     builder.Configuration
                         .GetConnectionString("MLMS"));
             });
+
+            builder.Services.AddScoped(typeof(IServices<>), typeof(GenericServices<>));
 
             var app = builder.Build();
 
