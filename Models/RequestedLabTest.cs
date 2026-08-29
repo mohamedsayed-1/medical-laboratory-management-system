@@ -6,7 +6,8 @@ namespace Medical_Laboratory_Management_System.Models
     {
         public int Id { get; set; }
         public LabTestStatus LabTestStatus { get; set; }
-        public decimal? LabTestResult { get; set; }
+        public int? LabTestResultId { get; set; }
+        public LabTestResult? LabTestResult { get; set; }
         public int AppointmentId { get; set; }
         public Appointment Appointment { get; set; }
         public int LabTestId { get; set; }

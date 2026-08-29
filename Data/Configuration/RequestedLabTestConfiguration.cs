@@ -15,9 +15,6 @@ namespace Medical_Laboratory_Management_System.Data.Configuration
                 .HasConversion<string>()
                 .HasColumnName("Status")
                 .IsRequired();
-            builder.Property(x => x.LabTestResult)
-                .HasPrecision(18, 4)
-                .IsRequired();
 
             builder.HasOne(r => r.Appointment)
                 .WithMany(a => a.RequestedLabTests)
@@ -30,6 +27,11 @@ namespace Medical_Laboratory_Management_System.Data.Configuration
                 .HasForeignKey(r => r.LabTestId)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
+
+            builder.HasOne(x => x.LabTestResult)
+            .WithOne(x => x.RequestedLabTest)
+            .HasForeignKey<RequestedLabTest>(x => x.LabTestResultId)
+            .IsRequired(false);
         }
     }
 }

@@ -14,6 +14,7 @@ namespace Medical_Laboratory_Management_System.Data
         DbSet<LabTest> LabTests { get; set; }
         DbSet<Appointment> Appointments { get; set; }
         DbSet<RequestedLabTest> RequestedLabTests { get; set; }
+        DbSet<LabTestResult> LabTestResults { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
