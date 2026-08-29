@@ -1,0 +1,16 @@
+using Medical_Laboratory_Management_System.Models.Enums;
+
+namespace Medical_Laboratory_Management_System.Models
+{
+    public class Patient
+    {
+        public int Id { get; set; }
+        public string Name { get; set; }
+        public int Age {  get; set; }
+        public Gender Gender {  get; set; }
+        public string PhoneNumber { get; set; }
+        public string? Email { get; set; }
+        public MaritalStatus? MaritalStatus { get; set; } 
+        public ICollection<Appointment> Appointments { get; set; }
+    }
+}
