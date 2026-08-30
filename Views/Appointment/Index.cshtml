@@ -1,0 +1,54 @@
+@model IEnumerable<Medical_Laboratory_Management_System.Models.Appointment>
+
+<h1>All Appointments</h1>
+
+<p>
+    <a asp-action="AddAppointment" class="btn btn-success">Add New Appointment</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Patient
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Date)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Urgent)
+            </th>
+            <th>
+                Doctor
+            </th>
+            <th>
+                Notes
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+            <td>
+                @Html.DisplayFor(model => item.Patient.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Date)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Urgent)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Doctor.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(model => item.Notes)
+            </td>
+            <td>
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a> &nbsp;
+                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success">Details</a> &nbsp;
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-success">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

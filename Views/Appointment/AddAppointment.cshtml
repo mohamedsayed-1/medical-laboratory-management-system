@@ -1,0 +1,100 @@
+﻿@model Medical_Laboratory_Management_System.View_Models.AddAppointmentViewModel
+
+
+<h1>Add Appointment</h1>
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SaveAppointment">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label asp-for="Date" class="control-label"></label>
+                <input asp-for="Date" class="form-control" />
+                <span asp-validation-for="Date" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientName" class="control-label"></label>
+                <input asp-for="PatientName" class="form-control" />
+                <span asp-validation-for="PatientName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientAge" class="control-label"></label>
+                <input asp-for="PatientAge" class="form-control" />
+                <span asp-validation-for="PatientAge" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientGender" class="control-label"></label>
+                <select asp-for="PatientGender"
+                        asp-items="Html.GetEnumSelectList <Medical_Laboratory_Management_System.Models.Enums.Gender> ()"
+                    class="form-control">
+                    <option value="">Select Gender</option>
+                </select>
+                <span asp-validation-for="PatientGender" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientPhoneNumber" class="control-label"></label>
+                <input asp-for="PatientPhoneNumber" class="form-control" />
+                <span asp-validation-for="PatientPhoneNumber" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientEmail" class="control-label"></label>
+                <input asp-for="PatientEmail" class="form-control" />
+                <span asp-validation-for="PatientEmail" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="PatientMaritalStatus" class="control-label"></label>
+                <select asp-for="PatientMaritalStatus"
+                        asp-items="Html.GetEnumSelectList<Medical_Laboratory_Management_System.Models.Enums.MaritalStatus>()"
+                        class="form-control">
+                    <option value="">Select Marital Status</option>
+                </select>
+                <span asp-validation-for="PatientMaritalStatus" class="text-danger"></span>
+            </div>
+            <div class="form-group"
+                <label asp-for="LabTestsIds" class="control-label" >Choose Lab Tests</label>
+                @foreach(var labTest in ViewBag.labTests)
+                {
+                    <div>
+                    <input type="checkbox"
+                    name="LabTestsIds"
+                    value="@labTest.Id" />
+                        <label style="overflow-wrap:break-word">@labTest.Name</label>
+                    </div>
+                }
+                <span asp-validation-for="LabTestsIds" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <input asp-for="Notes" class="form-control" />
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DoctorId" class="control-label"></label>
+                <select asp-for="DoctorId"
+                        asp-va
+                        asp-items="@( new SelectList(ViewBag.Doctors, "Id", "Name"))"
+                        class="form-control">
+                    <option value="">Select The Doctor</option>
+                </select>
+                <span asp-validation-for="DoctorId" class="text-danger"></span>
+            </div>
+            <div class="form-group form-check">
+                <label class="form-check-label">
+                    <input class="form-check-input" asp-for="Urgent" /> @Html.DisplayNameFor(model => model.Urgent)
+                </label>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
