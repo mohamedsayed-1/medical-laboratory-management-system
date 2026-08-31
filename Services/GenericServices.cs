@@ -60,7 +60,7 @@ namespace Medical_Laboratory_Management_System.Services
                     queue = queue.Include(navigationProperty);
                 }
             }
-            return queue.First();
+            return queue.FirstOrDefault();
         }
         public void Update(T entity)
         {
