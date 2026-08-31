@@ -1,8 +1,8 @@
 using Medical_Laboratory_Management_System.Models;
-using Medical_Laboratory_Management_System.Models.Enums;
 using Medical_Laboratory_Management_System.Services;
 using Medical_Laboratory_Management_System.View_Models;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Medical_Laboratory_Management_System.Controllers
 {
@@ -10,81 +10,57 @@ namespace Medical_Laboratory_Management_System.Controllers
     {
         private readonly IServices<Doctor> doctors;
         private readonly IServices<LabTest> labTests;
-        private readonly IServices<Appointment> appointments;
-        private readonly IServices<RequestedLabTest> requestedLabTests;
-        private readonly IPatientServices patients;
-
-        public AppointmentController(IServices<Doctor> doctors, 
+        private readonly IAppointmentServices appointmentServices;
+        public AppointmentController(IServices<Doctor> doctors,
             IServices<LabTest> labTests,
-            IPatientServices patients,
-            IServices<Appointment> appointments,
-            IServices<RequestedLabTest> requestedLabTests)
+            IAppointmentServices appointmentServices)
         {
             this.doctors = doctors;
             this.labTests = labTests;
-            this.appointments = appointments;
-            this.requestedLabTests = requestedLabTests;
-            this.patients = patients;
+            this.appointmentServices = appointmentServices;
         }
+
+        [HttpGet]
         public IActionResult AddAppointment()
         {
-            ViewBag.Doctors = doctors.GetAll();
-            ViewBag.labTests = labTests.GetAll();
-            return View("AddAppointment", new AddAppointmentViewModel());
+            var vm = new AddAppointmentViewModel()
+            {
+                Doctors = doctors.GetAll().Select(d => new SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Name,
+                }),
+                LabTests = labTests.GetAll().Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name,
+                })
+            };
+            return View("AddAppointment", vm);
         }
+        [HttpPost]
         public IActionResult SaveAppointment(AddAppointmentViewModel appointmentVM)
         {
             if (!ModelState.IsValid)
             {
+                appointmentVM.Doctors = doctors.GetAll().Select(d => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Name,
+                });
+                appointmentVM.LabTests = labTests.GetAll().Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name,
+                });
                 return View("AddAppointment", appointmentVM);
             }
-            var patient = patients.GetByPhoneNumber(appointmentVM.PatientPhoneNumber);
-            if (patient is null) {
-                patient = new Patient()
-                {
-                    Name = appointmentVM.PatientName,
-                    Age = (int)appointmentVM.PatientAge,
-                    Email = appointmentVM.PatientEmail,
-                    Gender = (Gender)appointmentVM.PatientGender,
-                    MaritalStatus = appointmentVM.PatientMaritalStatus,
-                    Appointments = new List<Appointment>(),
-                    PhoneNumber = appointmentVM.PatientPhoneNumber
-                };
-                patients.Add(patient);
-            }
-            var appointment = new Appointment()
-            {
-                Date = (DateTime)appointmentVM.Date,
-                Notes = appointmentVM.Notes,
-                Urgent = appointmentVM.Urgent,
-                DoctorId = appointmentVM.DoctorId,
-                PatientId = patient.Id,
-            };
-
-            var reqLabTests = new List<LabTest>();
-            foreach (var labTest in appointmentVM.LabTestsIds)
-            {
-                reqLabTests.Add(labTests.GetById(labTest));
-            }
-            foreach (var labTest in reqLabTests)
-            {
-                requestedLabTests.Add(new RequestedLabTest()
-                {
-                    LabTest = labTest,
-                    Appointment = appointment,
-                    LabTestStatus = LabTestStatus.Queued
-                });
-            }
-            appointments.Add(appointment);
-            patient.Appointments.Add(appointment);
-            appointments.Save();
+            appointmentServices.SaveAppointment(appointmentVM);
             return RedirectToAction("Index");
         }
         public IActionResult Index()
         {
-            List<Appointment> allAppointments
-                = appointments.GetAllWithIncludes().ToList();
-            return View("Index", allAppointments);
+            return View("Index", appointmentServices.GetAll());
         }
     }
 }

@@ -1,5 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Net.Sockets;
 using Medical_Laboratory_Management_System.Models.Enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace Medical_Laboratory_Management_System.View_Models
 {
@@ -39,10 +41,13 @@ namespace Medical_Laboratory_Management_System.View_Models
 
         // Doctor information
         [Required]
+        [Display(Name ="Doctor")]
         public int DoctorId { get; set; }
+        public IEnumerable<SelectListItem> Doctors { get; set; } = [];
 
         [Required]
         [Display(Name = "Lab Tests")]
         public List<int> LabTestsIds { get; set; }
+        public IEnumerable<SelectListItem> LabTests { get; set; } = [];
     }
 }

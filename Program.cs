@@ -23,6 +23,7 @@ namespace Medical_Laboratory_Management_System
             builder.Services.AddScoped(typeof(IServices<>), typeof(GenericServices<>));
             
             builder.Services.AddScoped<IPatientServices, PatientServices>();
+            builder.Services.AddScoped<IAppointmentServices, AppointmentServices>();
 
             var app = builder.Build();
 

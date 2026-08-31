@@ -6,7 +6,7 @@
 <hr />
 <div class="row">
     <div class="col-md-4">
-        <form asp-action="SaveAppointment">
+        <form asp-action="SaveAppointment" method="post">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Date" class="control-label"></label>
@@ -53,13 +53,13 @@
             </div>
             <div class="form-group"
                 <label asp-for="LabTestsIds" class="control-label" >Choose Lab Tests</label>
-                @foreach(var labTest in ViewBag.labTests)
+                @foreach(var labTest in @Model.LabTests)
                 {
                     <div>
                     <input type="checkbox"
                     name="LabTestsIds"
-                    value="@labTest.Id" />
-                        <label style="overflow-wrap:break-word">@labTest.Name</label>
+                    value="@labTest.Value" />
+                        <label style="overflow-wrap:break-word">@labTest.Text</label>
                     </div>
                 }
                 <span asp-validation-for="LabTestsIds" class="text-danger"></span>
@@ -70,10 +70,10 @@
                 <span asp-validation-for="Notes" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="DoctorId" class="control-label"></label>
+                <label asp-for="DoctorId" class="control-label">Doctor</label>
                 <select asp-for="DoctorId"
                         asp-va
-                        asp-items="@( new SelectList(ViewBag.Doctors, "Id", "Name"))"
+                        asp-items="@Model.Doctors"
                         class="form-control">
                     <option value="">Select The Doctor</option>
                 </select>

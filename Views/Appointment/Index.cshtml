@@ -1,4 +1,4 @@
-@model IEnumerable<Medical_Laboratory_Management_System.Models.Appointment>
+@model IEnumerable<Medical_Laboratory_Management_System.View_Models.IndexAppointmentViewModel>
 
 <h1>All Appointments</h1>
 
@@ -12,10 +12,10 @@
                 Patient
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Date)
+                Date
             </th>
             <th>
-                @Html.DisplayNameFor(model => model.Urgent)
+                Urgent
             </th>
             <th>
                 Doctor
@@ -29,7 +29,7 @@
 @foreach (var item in Model) {
         <tr>
             <td>
-                @Html.DisplayFor(model => item.Patient.Name)
+                @Html.DisplayFor(model => item.PatientName)
             </td>
             <td>
                 @Html.DisplayFor(model => item.Date)
@@ -38,15 +38,15 @@
                 @Html.DisplayFor(model => item.Urgent)
             </td>
             <td>
-                @Html.DisplayFor(model => item.Doctor.Name)
+                @Html.DisplayFor(model => item.DoctorName)
             </td>
             <td>
                 @Html.DisplayFor(model => item.Notes)
             </td>
             <td>
-                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a> &nbsp;
-                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-success">Details</a> &nbsp;
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-success">Delete</a>
+                    <a asp-action="Edit" asp-route-id="@item.AppointmentId" class="btn btn-success">Edit</a> &nbsp;
+                    <a asp-action="Details" asp-route-id="@item.AppointmentId" class="btn btn-success">Details</a> &nbsp;
+                    <a asp-action="Delete" asp-route-id="@item.AppointmentId" class="btn btn-success">Delete</a>
             </td>
         </tr>
 }
