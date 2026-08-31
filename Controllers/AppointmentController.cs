@@ -19,23 +19,24 @@ namespace Medical_Laboratory_Management_System.Controllers
             this.labTests = labTests;
             this.appointmentServices = appointmentServices;
         }
-
+        private void PopulateDropDowns(AddAppointmentViewModel vm)
+        {
+            vm.Doctors = doctors.GetAll().Select(d => new SelectListItem
+            {
+                Value = d.Id.ToString(),
+                Text = d.Name,
+            });
+            vm.LabTests = labTests.GetAll().Select(x => new SelectListItem
+            {
+                Value = x.Id.ToString(),
+                Text = x.Name,
+            });
+        }
         [HttpGet]
         public IActionResult AddAppointment()
         {
-            var vm = new AddAppointmentViewModel()
-            {
-                Doctors = doctors.GetAll().Select(d => new SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Name,
-                }),
-                LabTests = labTests.GetAll().Select(x => new SelectListItem
-                {
-                    Value = x.Id.ToString(),
-                    Text = x.Name,
-                })
-            };
+            var vm = new AddAppointmentViewModel();
+            PopulateDropDowns(vm);
             return View("AddAppointment", vm);
         }
         [HttpPost]
@@ -43,30 +44,12 @@ namespace Medical_Laboratory_Management_System.Controllers
         {
             if (!ModelState.IsValid)
             {
-                appointmentVM.Doctors = doctors.GetAll().Select(d => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Name,
-                });
-                appointmentVM.LabTests = labTests.GetAll().Select(x => new SelectListItem
-                {
-                    Value = x.Id.ToString(),
-                    Text = x.Name,
-                });
+                PopulateDropDowns(appointmentVM);
                 return View("AddAppointment", appointmentVM);
             }
             if (!appointmentServices.SaveAppointment(appointmentVM))
             {
-                appointmentVM.Doctors = doctors.GetAll().Select(d => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
-                {
-                    Value = d.Id.ToString(),
-                    Text = d.Name,
-                });
-                appointmentVM.LabTests = labTests.GetAll().Select(x => new SelectListItem
-                {
-                    Value = x.Id.ToString(),
-                    Text = x.Name,
-                });
+                PopulateDropDowns(appointmentVM);
                 ModelState.AddModelError("LabTestsIds", "Please, choose the tests correctly");
                 return View("AddAppointment", appointmentVM);
             }
