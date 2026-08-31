@@ -55,7 +55,21 @@ namespace Medical_Laboratory_Management_System.Controllers
                 });
                 return View("AddAppointment", appointmentVM);
             }
-            appointmentServices.SaveAppointment(appointmentVM);
+            if (!appointmentServices.SaveAppointment(appointmentVM))
+            {
+                appointmentVM.Doctors = doctors.GetAll().Select(d => new Microsoft.AspNetCore.Mvc.Rendering.SelectListItem
+                {
+                    Value = d.Id.ToString(),
+                    Text = d.Name,
+                });
+                appointmentVM.LabTests = labTests.GetAll().Select(x => new SelectListItem
+                {
+                    Value = x.Id.ToString(),
+                    Text = x.Name,
+                });
+                ModelState.AddModelError("LabTestsIds", "Please, choose the tests correctly");
+                return View("AddAppointment", appointmentVM);
+            }
             return RedirectToAction("Index");
         }
         public IActionResult Index()

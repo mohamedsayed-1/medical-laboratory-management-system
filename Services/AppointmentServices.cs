@@ -40,7 +40,7 @@ namespace Medical_Laboratory_Management_System.Services
                     });
             return query;
         }
-        public Patient GetPatient(AddAppointmentViewModel appointmentVM)
+        private Patient GetPatient(AddAppointmentViewModel appointmentVM)
         {
             var patient = patients
                 .GetByPhoneNumber(appointmentVM.PatientPhoneNumber);
@@ -60,7 +60,7 @@ namespace Medical_Laboratory_Management_System.Services
             }
             return patient;
         }
-        public void GetRequestedLabTests(List<int> labTestsIds, Appointment appointment)
+        private List<LabTest>? GetRequestedLabTests(List<int> labTestsIds)
         {
             var reqLabTests = new List<LabTest>();
             foreach (var labTest in labTestsIds)
@@ -70,7 +70,15 @@ namespace Medical_Laboratory_Management_System.Services
                 {
                     reqLabTests.Add(_labTest);
                 }
+                else
+                {
+                    return null;
+                }
             }
+            return reqLabTests;
+        }
+        private void AddRequestedLabTests(List<LabTest> reqLabTests, Appointment appointment)
+        {
             foreach (var labTest in reqLabTests)
             {
                 requestedLabTests.Add(new RequestedLabTest()
@@ -81,8 +89,13 @@ namespace Medical_Laboratory_Management_System.Services
                 });
             }
         }
-        public void SaveAppointment(AddAppointmentViewModel appointmentVM)
+        public bool SaveAppointment(AddAppointmentViewModel appointmentVM)
         {
+            var reqLabtests = GetRequestedLabTests(appointmentVM.LabTestsIds);
+            if (reqLabtests is null)
+            {
+                return false;
+            }
             var patient = GetPatient(appointmentVM);
             var appointment = new Appointment()
             {
@@ -90,11 +103,12 @@ namespace Medical_Laboratory_Management_System.Services
                 Notes = appointmentVM.Notes,
                 Urgent = appointmentVM.Urgent,
                 DoctorId = appointmentVM.DoctorId,
-                PatientId = patient.Id,
             };
-            GetRequestedLabTests(appointmentVM.LabTestsIds, appointment);
+            AddRequestedLabTests(reqLabtests, appointment);
             appointments.Add(appointment);
+            patient.Appointments.Add(appointment);
             appointments.Save();
+            return true;
         }
     }
 }
