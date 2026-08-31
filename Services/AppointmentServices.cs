@@ -49,9 +49,9 @@ namespace Medical_Laboratory_Management_System.Services
                 patient = new Patient()
                 {
                     Name = appointmentVM.PatientName,
-                    Age = (int)appointmentVM.PatientAge,
+                    Age = appointmentVM.PatientAge!.Value,
                     Email = appointmentVM.PatientEmail,
-                    Gender = (Gender)appointmentVM.PatientGender,
+                    Gender = appointmentVM.PatientGender!.Value,
                     MaritalStatus = appointmentVM.PatientMaritalStatus,
                     Appointments = new List<Appointment>(),
                     PhoneNumber = appointmentVM.PatientPhoneNumber
@@ -99,7 +99,7 @@ namespace Medical_Laboratory_Management_System.Services
             var patient = GetPatient(appointmentVM);
             var appointment = new Appointment()
             {
-                Date = (DateTime)appointmentVM.Date,
+                Date = appointmentVM.Date!.Value,
                 Notes = appointmentVM.Notes,
                 Urgent = appointmentVM.Urgent,
                 DoctorId = appointmentVM.DoctorId,

@@ -1,5 +1,4 @@
 ﻿using System.ComponentModel.DataAnnotations;
-using System.Net.Sockets;
 using Medical_Laboratory_Management_System.Models.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
@@ -16,8 +15,8 @@ namespace Medical_Laboratory_Management_System.View_Models
 
         // Patient information
         [Required]
-        [Display(Name ="Patient Name")]
-        public string PatientName { get; set; }
+        [Display(Name = "Patient Name")]
+        public string PatientName { get; set; } = string.Empty;
         
         [Required]
         [Range(1, 120)]
@@ -30,7 +29,7 @@ namespace Medical_Laboratory_Management_System.View_Models
         
         [Required]
         [Display(Name = "Patient Phone Number")]
-        public string PatientPhoneNumber { get; set; }
+        public string PatientPhoneNumber { get; set; } = string.Empty;
         
         [EmailAddress]
         [Display(Name = "Patient Email")]
@@ -47,7 +46,7 @@ namespace Medical_Laboratory_Management_System.View_Models
 
         [Required]
         [Display(Name = "Lab Tests")]
-        public List<int> LabTestsIds { get; set; }
+        public List<int> LabTestsIds { get; set; } = [];
         public IEnumerable<SelectListItem> LabTests { get; set; } = [];
     }
 }

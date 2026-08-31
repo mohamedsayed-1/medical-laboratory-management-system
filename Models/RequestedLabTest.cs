@@ -9,8 +9,8 @@ namespace Medical_Laboratory_Management_System.Models
         public int? LabTestResultId { get; set; }
         public LabTestResult? LabTestResult { get; set; }
         public int AppointmentId { get; set; }
-        public Appointment Appointment { get; set; }
+        public required Appointment Appointment { get; set; }
         public int LabTestId { get; set; }
-        public LabTest LabTest { get; set; }
+        public required LabTest LabTest { get; set; }
     }
 }
