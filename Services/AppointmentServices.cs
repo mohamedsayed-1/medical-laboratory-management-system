@@ -1,7 +1,9 @@
-﻿using Medical_Laboratory_Management_System.Data;
+﻿using System.Collections.Generic;
+using Medical_Laboratory_Management_System.Data;
 using Medical_Laboratory_Management_System.Models;
 using Medical_Laboratory_Management_System.Models.Enums;
 using Medical_Laboratory_Management_System.View_Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Medical_Laboratory_Management_System.Services
 {
@@ -24,6 +26,35 @@ namespace Medical_Laboratory_Management_System.Services
             this.context = context;
             this.requestedLabTests = requestedLabTests;
             this.patients = patients;
+        }
+        public AppointmentDetailsViewModel? GetDetails(int id)
+        {
+            var vm 
+                = context.Set<Appointment>().Where(x => x.Id == id)
+                .Select(x => new AppointmentDetailsViewModel
+                {
+                    AppointmentId = x.Id,
+                    Date = x.Date,
+                    DoctorName = x.Doctor.Name,
+                    Notes = x.Notes,
+                    PatientAge = x.Patient.Age,
+                    PatientEmail = x.Patient.Email,
+                    PatientGender = x.Patient.Gender,
+                    PatientName = x.Patient.Name,
+                    PatientMaritalStatus = x.Patient.MaritalStatus,
+                    PatientPhoneNumber = x.Patient.PhoneNumber,
+                    Urgent = x.Urgent,
+                    LabTestsDetails = x.RequestedLabTests
+                    .Select(r => new LabTestDetails()
+                    {
+                        RequestedLabTestId = r.Id,
+                        RequestedLabTestName = r.LabTest.Name,
+                        LabTestResult = r.LabTestResult == null ? null : r.LabTestResult.Value,
+                        LabTestStatus = r.LabTestStatus,
+                        Notes = r.LabTestResult == null ? null : r.LabTestResult.Notes
+                    }).ToList()
+                }).FirstOrDefault();
+            return vm;
         }
         public IQueryable<IndexAppointmentViewModel> GetAll()
         {

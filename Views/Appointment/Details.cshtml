@@ -1,0 +1,110 @@
+@using Medical_Laboratory_Management_System.Models.Enums
+@model Medical_Laboratory_Management_System.View_Models.AppointmentDetailsViewModel
+<h1>Appointment Details</h1>
+<div style="margin-block-end:15px">
+    <a asp-action="Edit" asp-route-id="@Model.AppointmentId" class="btn btn-success">Edit</a> &nbsp; &nbsp;&nbsp;
+    <a asp-action="Index" class="btn btn-success">Back to List</a>
+</div>
+<div class="container-fluid text-start" >
+
+    <!-- Appointment -->
+    <h4>Appointment</h4>
+    <table class="table table-bordered text-start">
+        <tr>
+            <th style="width:30%">Date</th>
+            <td>@Model.Date</td>
+        </tr>
+        <tr>
+            <th>Notes</th>
+            <td>@Model.Notes</td>
+        </tr>
+        <tr>
+            <th>Urgent</th>
+            <td>
+                @{
+                    if (Model.Urgent)
+                    {
+                        <spin>Yes</spin>            
+                    }
+                    else{
+                        <span>No</span>
+                    }
+                }
+            </td>
+        </tr>
+        <tr>
+            <th>Doctor</th>
+            <td>@Model.DoctorName</td>
+        </tr>
+    </table>
+
+
+    <!-- Patient -->
+    <h4>Patient</h4>
+    <table class="table table-bordered text-start">
+        <tr>
+            <th style="width:30%">Name</th>
+            <td>@Model.PatientName</td>
+        </tr>
+        <tr>
+            <th>Phone Number</th>
+            <td>@Model.PatientPhoneNumber</td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td>@Model.PatientEmail</td>
+        </tr>
+        <tr>
+            <th>Marital Status</th>
+            <td>@Model.PatientMaritalStatus</td>
+        </tr>
+        <tr>
+            <th>Gender</th>
+            <td>@Model.PatientGender</td>
+        </tr>
+        <tr>
+            <th>Age</th>
+            <td>@Model.PatientAge</td>
+        </tr>
+    </table>
+
+
+    <!-- Lab Tests -->
+    <h4>Lab Tests</h4>
+    <table class="table table-bordered text-start">
+        <thead>
+            <tr>
+                <th style="width:30%">Test</th>
+                <th style="width:20%">Status</th>
+                <th style="width:20%">Result</th>
+                <th style="width:30%">Notes</th>
+            </tr>
+        </thead>
+
+        <tbody>
+            @foreach (var LabTest in Model.LabTestsDetails)
+            {
+                <tr>
+                    <td>@LabTest.RequestedLabTestName</td>
+                    <td>@LabTest.LabTestStatus</td>
+                    @if (LabTest.LabTestStatus == LabTestStatus.Completed)
+                    {
+                        <td>
+                            @LabTest.LabTestResult
+                        </td>
+                        <td>
+                            @LabTest.Notes
+                        </td>
+                    }
+                    else
+                    {
+                        <td><a asp-action="AddResult"
+                               asp-route-id="@LabTest.RequestedLabTestId"
+                               class="btn btn-success" />Add Result</td>
+                    }
+                </tr>
+            }
+        </tbody>
+    </table>
+
+</div>

@@ -32,6 +32,16 @@ namespace Medical_Laboratory_Management_System.Controllers
                 Text = x.Name,
             });
         }
+        public IActionResult Details(int id)
+        {
+            var vm = appointmentServices.GetDetails(id);
+            if(vm is null)
+            {
+                return NotFound();
+            }
+            return View("Details", vm);
+        }
+
         [HttpGet]
         public IActionResult AddAppointment()
         {

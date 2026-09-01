@@ -7,5 +7,6 @@ namespace Medical_Laboratory_Management_System.Services
     {
         public bool SaveAppointment(AddAppointmentViewModel appointmentVM);
         public IQueryable<IndexAppointmentViewModel> GetAll();
+        public AppointmentDetailsViewModel? GetDetails(int id);
     }
 }
