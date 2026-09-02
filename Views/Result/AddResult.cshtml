@@ -1,0 +1,42 @@
+@model Medical_Laboratory_Management_System.View_Models.AddLabTestResult
+
+
+<h1>Lab Test Result</h1>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="SaveResult">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="form-group">
+                <label asp-for="RequestedLabTestName" class="control-label"></label>
+                <input asp-for="RequestedLabTestName" class="form-control" readonly placeholder="@Model.RequestedLabTestName" />
+                <span asp-validation-for="RequestedLabTestName" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="LabTestResult" class="control-label"></label>
+                <input asp-for="LabTestResult" class="form-control" />
+                <span asp-validation-for="LabTestResult" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Notes" class="control-label"></label>
+                <textarea asp-for="Notes" class="form-control" rows="5"></textarea>
+                <span asp-validation-for="Notes" class="text-danger"></span>
+            </div>
+            <div class="form-group" hidden="hidden">
+                <input asp-for="RequestedLabTestId" readonly hidden="hidden" value="@Model.RequestedLabTestId" />
+            </div>
+            <div class="form-group" hidden="hidden">
+                <input asp-for="AppointmentId" readonly hidden="hidden" value="@Model.AppointmentId" />
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Add" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>

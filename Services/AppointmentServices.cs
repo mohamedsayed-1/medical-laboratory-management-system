@@ -112,12 +112,7 @@ namespace Medical_Laboratory_Management_System.Services
         {
             foreach (var labTest in reqLabTests)
             {
-                requestedLabTests.Add(new RequestedLabTest()
-                {
-                    LabTest = labTest,
-                    Appointment = appointment,
-                    LabTestStatus = LabTestStatus.Queued
-                });
+                requestedLabTests.Add(RequestedLabTest.Create(appointment, labTest));
             }
         }
         public bool SaveAppointment(AddAppointmentViewModel appointmentVM)
