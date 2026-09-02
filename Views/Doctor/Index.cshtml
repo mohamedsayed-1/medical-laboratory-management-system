@@ -1,0 +1,49 @@
+﻿@model IEnumerable<Medical_Laboratory_Management_System.View_Models.IndexDoctor>
+
+<h1>All Doctors</h1>
+
+<p>
+    <a asp-action="AddDoctor" asp-controller="Doctor" class="btn btn-success">Add New Doctor</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Age
+            </th>
+            <th>
+                Gender
+            </th>
+            <th>
+                Join Date
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Age)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Gender)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.JoinDate)
+                </td>
+                <td>
+                    <input hidden value="item.Id" />
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a> &nbsp;
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-success">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
