@@ -1,0 +1,37 @@
+﻿@model IEnumerable<Medical_Laboratory_Management_System.View_Models.IndexLabTest>
+
+<h1>All Lab Tests</h1>
+
+<p>
+    <a asp-action="AddLabTest" asp-controller="LabTest" class="btn btn-success">Add New Lab Test</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Price
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(model => item.Name)
+                </td>
+                <td>
+                    @Html.DisplayFor(model => item.Price)
+                </td>
+                <td>
+                    <input hidden value="item.Id" />
+                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a> &nbsp;
+                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-success">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
