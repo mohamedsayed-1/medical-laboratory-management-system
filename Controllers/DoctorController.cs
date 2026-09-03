@@ -56,5 +56,15 @@ namespace Medical_Laboratory_Management_System.Controllers
             doctorServices.SaveDoctor(vm);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            if (!doctorServices.Delete(id))
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

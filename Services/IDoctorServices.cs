@@ -9,6 +9,6 @@ namespace Medical_Laboratory_Management_System.Services
         public IndexDoctor? GetEditDoctorById(int id);
         public void SaveEdit(IndexDoctor doctor);
         public void SaveDoctor(AddDoctorViewModel doctor);
-
+        public bool Delete(int id);
     }
 }

@@ -39,9 +39,11 @@
                     @Html.DisplayFor(model => item.JoinDate)
                 </td>
                 <td>
-                    <input hidden value="item.Id" />
+                    <input hidden value="@item.Id" />
                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-success">Edit</a> &nbsp;
-                    <a asp-action="Delete" asp-route-id="@item.Id" class="btn btn-success">Delete</a>
+                    <form asp-action="Delete" method="post" asp-route-id="@item.Id" style="display:inline">
+                        <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this Doctor?');">Delete</button>
+                    </form> 
                 </td>
             </tr>
         }

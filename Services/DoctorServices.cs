@@ -1,6 +1,7 @@
 ﻿using Medical_Laboratory_Management_System.Data;
 using Medical_Laboratory_Management_System.Models;
 using Medical_Laboratory_Management_System.View_Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Medical_Laboratory_Management_System.Services
 {
@@ -59,6 +60,23 @@ namespace Medical_Laboratory_Management_System.Services
             };
             Add(doc);
             Save();
+        }
+
+        public bool Delete(int id)
+        {
+            var doctor = context.Set<Doctor>()
+                .Where(x => x.Id == id)
+                .Include(x => x.Appointments)
+                .FirstOrDefault();
+            if (doctor is null)
+                return false;
+            if (doctor.Appointments.Count > 0)
+            {
+                return false;
+            }
+            context.Remove(doctor);
+            context.SaveChanges();
+            return true;
         }
     }
 }
