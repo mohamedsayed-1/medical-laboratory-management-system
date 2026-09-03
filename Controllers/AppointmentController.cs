@@ -99,5 +99,15 @@ namespace Medical_Laboratory_Management_System.Controllers
             appointmentServices.SaveEdit(appointment);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            if (!appointmentServices.Delete(id))
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

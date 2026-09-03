@@ -10,5 +10,6 @@ namespace Medical_Laboratory_Management_System.Services
         public AppointmentDetailsViewModel? GetDetails(int id);
         public EditAppointmentViewModel? GetEditAppointmentById(int id);
         public void SaveEdit(EditAppointmentViewModel appointment);
+        public bool Delete(int id);
     }
 }

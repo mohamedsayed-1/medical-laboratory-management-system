@@ -1,6 +1,7 @@
 ﻿using Medical_Laboratory_Management_System.Data;
 using Medical_Laboratory_Management_System.Models;
 using Medical_Laboratory_Management_System.View_Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Medical_Laboratory_Management_System.Services
 {
@@ -162,6 +163,33 @@ namespace Medical_Laboratory_Management_System.Services
                 }
                 Save();
             }
+        }
+        public bool Delete(int id)
+        {
+            var appointment = context.Set<Appointment>()
+                .Where(x => x.Id == id)
+                .Include(x => x.Patient)
+                    .ThenInclude(x => x.Appointments)
+                .Include(x => x.RequestedLabTests)
+                    .ThenInclude(x => x.LabTestResult)
+                .FirstOrDefault();
+            if (appointment is null)
+                return false;
+            foreach(var x in appointment.RequestedLabTests)
+            {
+                if(x.LabTestResult != null)
+                {
+                    context.Remove(x.LabTestResult);
+                }
+                context.Remove(x);
+            }
+            context.Remove(appointment);
+            if (appointment.Patient.Appointments.Count == 1)
+            {
+                context.Remove(appointment.Patient);
+            }
+            context.SaveChanges();
+            return true;
         }
     }
 }

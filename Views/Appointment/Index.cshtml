@@ -46,7 +46,9 @@
             <td>
                     <a asp-action="Edit" asp-route-id="@item.AppointmentId" class="btn btn-success">Edit</a> &nbsp;
                     <a asp-action="Details" asp-route-id="@item.AppointmentId" class="btn btn-success">Details</a> &nbsp;
-                    <a asp-action="Delete" asp-route-id="@item.AppointmentId" class="btn btn-success">Delete</a>
+                <form asp-action="Delete" method="post" asp-route-id="@item.AppointmentId" style="display:inline">
+                    <button type="submit" class="btn btn-danger" onclick="return confirm('Delete this appointment?');">Delete</button>
+                </form> 
             </td>
         </tr>
 }
