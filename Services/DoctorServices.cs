@@ -48,5 +48,17 @@ namespace Medical_Laboratory_Management_System.Services
                 context.SaveChanges();
             }
         }
+        public void SaveDoctor(AddDoctorViewModel doctor)
+        {
+            var doc = new Doctor()
+            {
+                Name = doctor.Name,
+                Age = doctor.Age!.Value,
+                Gender = doctor.Gender!.Value,
+                JoinDate = doctor.JoinDate,
+            };
+            Add(doc);
+            Save();
+        }
     }
 }

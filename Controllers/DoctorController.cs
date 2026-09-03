@@ -40,5 +40,21 @@ namespace Medical_Laboratory_Management_System.Controllers
             doctorServices.SaveEdit(doctor);
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public IActionResult AddDoctor()
+        {
+            var vm = new AddDoctorViewModel();
+            return View("AddDoctor", vm);
+        }
+        [HttpPost]
+        public IActionResult SaveDoctor(AddDoctorViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("AddDoctor", vm);
+            }
+            doctorServices.SaveDoctor(vm);
+            return RedirectToAction("Index");
+        }
     }
 }

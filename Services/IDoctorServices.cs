@@ -8,5 +8,7 @@ namespace Medical_Laboratory_Management_System.Services
         public ICollection<IndexDoctor> GetIndexDoctors();
         public IndexDoctor? GetEditDoctorById(int id);
         public void SaveEdit(IndexDoctor doctor);
+        public void SaveDoctor(AddDoctorViewModel doctor);
+
     }
 }
