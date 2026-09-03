@@ -5,7 +5,9 @@ namespace Medical_Laboratory_Management_System.Services
 {
     public interface IPatientServices : IServices<Patient>
     {
-        Patient? GetByPhoneNumber(string phoneNumber);
-        ICollection<IndexPatient> GetIndexPatients();
+        public Patient? GetByPhoneNumber(string phoneNumber);
+        public ICollection<IndexPatient> GetIndexPatients();
+        public IndexPatient? GetEditPatientById(int id);
+        public bool SaveEdit(IndexPatient patient);
     }
 }
