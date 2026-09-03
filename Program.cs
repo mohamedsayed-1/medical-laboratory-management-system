@@ -21,12 +21,11 @@ namespace Medical_Laboratory_Management_System
             });
 
             builder.Services.AddScoped(typeof(IServices<>), typeof(GenericServices<>));
-            
+
             builder.Services.AddScoped<IPatientServices, PatientServices>();
             builder.Services.AddScoped<IAppointmentServices, AppointmentServices>();
             builder.Services.AddScoped<IResultServices, ResultServices>();
             builder.Services.AddScoped<IDoctorServices, DoctorServices>();
-            builder.Services.AddScoped<ILabTestServices, LabTestServices>();
 
             var app = builder.Build();
 

@@ -23,5 +23,30 @@ namespace Medical_Laboratory_Management_System.Services
                 JoinDate = x.JoinDate
             }).ToList();
         }
+        public IndexDoctor? GetEditDoctorById(int id)
+        {
+            return context.Set<Doctor>()
+                .Where(x => x.Id == id)
+                .Select(x => new IndexDoctor
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Age = x.Age,
+                    Gender = x.Gender,
+                    JoinDate = x.JoinDate
+                }).FirstOrDefault();
+        }
+        public void SaveEdit(IndexDoctor doctorVM)
+        {
+            var doctor = GetById(doctorVM.Id);
+            if (doctor != null)
+            {
+                doctor.Name = doctorVM.Name;
+                doctor.Age = doctorVM.Age;
+                doctor.Gender = doctorVM.Gender;
+                doctor.JoinDate = doctorVM.JoinDate;
+                context.SaveChanges();
+            }
+        }
     }
 }
