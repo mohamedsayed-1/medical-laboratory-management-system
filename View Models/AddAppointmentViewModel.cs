@@ -8,6 +8,7 @@ namespace Medical_Laboratory_Management_System.View_Models
     {
         // Appointment information
         [Required]
+        [DisplayFormat(DataFormatString = "{0:yyyy-MM-ddTHH:mm}", ApplyFormatInEditMode = true)]
         public DateTime? Date { get; set; } = DateTime.Now;
         public string? Notes { get; set; }
         public bool Urgent { get; set; }
@@ -45,6 +46,7 @@ namespace Medical_Laboratory_Management_System.View_Models
         public IEnumerable<SelectListItem> Doctors { get; set; } = [];
 
         [Required]
+        [MinLength(1, ErrorMessage ="Please select at least one lab test.")]
         [Display(Name = "Lab Tests")]
         public List<int> LabTestsIds { get; set; } = [];
         public IEnumerable<SelectListItem> LabTests { get; set; } = [];
