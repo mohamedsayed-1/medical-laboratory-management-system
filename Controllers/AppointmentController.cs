@@ -8,16 +8,24 @@ namespace Medical_Laboratory_Management_System.Controllers
 {
     public class AppointmentController : Controller
     {
-        private readonly IServices<Doctor> doctors;
-        private readonly IServices<LabTest> labTests;
+        private readonly IDoctorServices doctors;
+        private readonly ILabTestServices labTests;
         private readonly IAppointmentServices appointmentServices;
-        public AppointmentController(IServices<Doctor> doctors,
-            IServices<LabTest> labTests,
+        public AppointmentController(IDoctorServices doctors,
+            ILabTestServices labTests,
             IAppointmentServices appointmentServices)
         {
             this.doctors = doctors;
             this.labTests = labTests;
             this.appointmentServices = appointmentServices;
+        }
+        private void PopulateDoctorsDropDown(EditAppointmentViewModel vm)
+        {
+            vm.Doctors = doctors.GetAll().Select(d => new SelectListItem
+            {
+                Value = d.Id.ToString(),
+                Text = d.Name,
+            });
         }
         private void PopulateDropDowns(AddAppointmentViewModel vm)
         {
@@ -67,7 +75,29 @@ namespace Medical_Laboratory_Management_System.Controllers
         }
         public IActionResult Index()
         {
-            return View("Index", appointmentServices.GetAll());
+            return View("Index", appointmentServices.GetAllIndex());
+        }
+        [HttpGet]
+        public IActionResult Edit(int id)
+        {
+            var appointment = appointmentServices.GetEditAppointmentById(id);
+            if (appointment is null)
+            {
+                return NotFound();
+            }
+            PopulateDoctorsDropDown(appointment);
+            return View("Edit", appointment);
+        }
+        [HttpPost]
+        public IActionResult SaveEdit(EditAppointmentViewModel appointment)
+        {
+            if (!ModelState.IsValid)
+            {
+                PopulateDoctorsDropDown(appointment);
+                return View("Edit", appointment);
+            }
+            appointmentServices.SaveEdit(appointment);
+            return RedirectToAction("Index");
         }
     }
 }

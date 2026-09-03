@@ -1,29 +1,26 @@
-﻿using System.Collections.Generic;
-using Medical_Laboratory_Management_System.Data;
+﻿using Medical_Laboratory_Management_System.Data;
 using Medical_Laboratory_Management_System.Models;
-using Medical_Laboratory_Management_System.Models.Enums;
 using Medical_Laboratory_Management_System.View_Models;
-using Microsoft.EntityFrameworkCore;
 
 namespace Medical_Laboratory_Management_System.Services
 {
-    public class AppointmentServices : IAppointmentServices
+    public class AppointmentServices : GenericServices<Appointment> ,IAppointmentServices
     {
-        private readonly IServices<LabTest> labTests;
-        private readonly IServices<Appointment> appointments;
+        private readonly ILabTestServices labTests;
         private readonly MLMSDbContext context;
+        private readonly IDoctorServices doctorServices;
         private readonly IServices<RequestedLabTest> requestedLabTests;
         private readonly IPatientServices patients;
 
-        public AppointmentServices(IServices<LabTest> labTests,
+        public AppointmentServices(ILabTestServices labTests,
             IPatientServices patients,
-            IServices<Appointment> appointments,
             MLMSDbContext context,
-            IServices<RequestedLabTest> requestedLabTests)
+            IDoctorServices doctorServices,
+            IServices<RequestedLabTest> requestedLabTests) : base(context)
         {
             this.labTests = labTests;
-            this.appointments = appointments;
             this.context = context;
+            this.doctorServices = doctorServices;
             this.requestedLabTests = requestedLabTests;
             this.patients = patients;
         }
@@ -56,7 +53,7 @@ namespace Medical_Laboratory_Management_System.Services
                 }).FirstOrDefault();
             return vm;
         }
-        public IQueryable<IndexAppointmentViewModel> GetAll()
+        public IQueryable<IndexAppointmentViewModel> GetAllIndex()
         {
             IQueryable<IndexAppointmentViewModel> query 
                 = context.Set<Appointment>().Select(x =>
@@ -131,10 +128,40 @@ namespace Medical_Laboratory_Management_System.Services
                 DoctorId = appointmentVM.DoctorId,
             };
             AddRequestedLabTests(reqLabtests, appointment);
-            appointments.Add(appointment);
+            Add(appointment);
             patient.Appointments.Add(appointment);
-            appointments.Save();
+            Save();
             return true;
+        }
+
+        public EditAppointmentViewModel? GetEditAppointmentById(int id)
+        {
+            return context.Set<Appointment>()
+                .Where(x => x.Id == id)
+                .Select(x => new EditAppointmentViewModel
+                {
+                    Id = x.Id,
+                    Date = x.Date,
+                    Notes = x.Notes,
+                    Urgent = x.Urgent,
+                    DoctorId= x.DoctorId,
+                    PatientName = x.Patient.Name
+                }).FirstOrDefault();
+        }
+        public void SaveEdit(EditAppointmentViewModel appointmentVM)
+        {
+            var appointment = GetById(appointmentVM.Id);
+            if (appointment != null)
+            {
+                appointment.Date = appointmentVM.Date;
+                appointment.Notes = appointmentVM.Notes;
+                appointment.Urgent = appointmentVM.Urgent;
+                if (doctorServices.GetById(appointmentVM.DoctorId) is not null)
+                {
+                    appointment.DoctorId = appointmentVM.DoctorId;
+                }
+                Save();
+            }
         }
     }
 }
