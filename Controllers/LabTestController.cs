@@ -40,5 +40,21 @@ namespace Medical_Laboratory_Management_System.Controllers
             labTestServices.SaveEdit(labTest);
             return RedirectToAction("Index");
         }
+        [HttpGet]
+        public IActionResult AddLabTest()
+        {
+            var vm = new AddLabTestViewModel();
+            return View("AddLabTest", vm);
+        }
+        [HttpPost]
+        public IActionResult SaveLabTest(AddLabTestViewModel vm)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View("AddLabTest", vm);
+            }
+            labTestServices.SaveLabTest(vm);
+            return RedirectToAction("Index");
+        }
     }
 }

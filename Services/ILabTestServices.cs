@@ -8,5 +8,6 @@ namespace Medical_Laboratory_Management_System.Services
         public ICollection<IndexLabTest> GetIndexLabTests();
         public IndexLabTest? GetEditLabTestById(int id);
         public void SaveEdit(IndexLabTest labTest);
+        public void SaveLabTest(AddLabTestViewModel labTest);
     }
 }

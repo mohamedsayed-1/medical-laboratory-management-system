@@ -43,5 +43,15 @@ namespace Medical_Laboratory_Management_System.Services
                 context.SaveChanges();
             }
         }
+        public void SaveLabTest(AddLabTestViewModel vm)
+        {
+            var labTest = new LabTest()
+            {
+                Name = vm.Name,
+                Price = vm.Price!.Value
+            };
+            Add(labTest);
+            Save();
+        }
     }
 }
