@@ -56,5 +56,15 @@ namespace Medical_Laboratory_Management_System.Controllers
             labTestServices.SaveLabTest(vm);
             return RedirectToAction("Index");
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult Delete(int id)
+        {
+            if (!labTestServices.Delete(id))
+            {
+                return NotFound();
+            }
+            return RedirectToAction("Index");
+        }
     }
 }

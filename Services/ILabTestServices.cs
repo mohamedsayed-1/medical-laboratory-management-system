@@ -9,5 +9,6 @@ namespace Medical_Laboratory_Management_System.Services
         public IndexLabTest? GetEditLabTestById(int id);
         public void SaveEdit(IndexLabTest labTest);
         public void SaveLabTest(AddLabTestViewModel labTest);
+        public bool Delete(int id);
     }
 }
