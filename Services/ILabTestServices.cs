@@ -6,5 +6,7 @@ namespace Medical_Laboratory_Management_System.Services
     public interface ILabTestServices : IServices<LabTest>
     {
         public ICollection<IndexLabTest> GetIndexLabTests();
+        public IndexLabTest? GetEditLabTestById(int id);
+        public void SaveEdit(IndexLabTest labTest);
     }
 }

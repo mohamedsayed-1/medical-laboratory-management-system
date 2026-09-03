@@ -21,5 +21,27 @@ namespace Medical_Laboratory_Management_System.Services
                 Price = x.Price
             }).ToList();
         }
+        public IndexLabTest? GetEditLabTestById(int id)
+        {
+            return context.Set<LabTest>()
+                .Where(x => x.Id == id)
+                .Select(x => new IndexLabTest
+                {
+                    Id = x.Id,
+                    Name = x.Name,
+                    Price = x.Price
+                }).FirstOrDefault();
+        }
+
+        public void SaveEdit(IndexLabTest labTestVM)
+        {
+            var labTest = GetById(labTestVM.Id);
+            if (labTest != null)
+            {
+                labTest.Name = labTestVM.Name;
+                labTest.Price = labTestVM.Price;
+                context.SaveChanges();
+            }
+        }
     }
 }
