@@ -24,7 +24,7 @@
                 @{
                     if (Model.Urgent)
                     {
-                        <spin>Yes</spin>            
+                        <span>Yes</span>            
                     }
                     else{
                         <span>No</span>
@@ -101,7 +101,8 @@
                         <td><a asp-action="AddResult"
                                asp-controller="Result"
                                asp-route-id="@LabTest.RequestedLabTestId"
-                               class="btn btn-success" />Add Result</td>
+                               class="btn btn-success" >Add Result</a>
+                        </td>
                     }
                 </tr>
             }
