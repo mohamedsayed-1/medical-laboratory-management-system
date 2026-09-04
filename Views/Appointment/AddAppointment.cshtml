@@ -51,7 +51,7 @@
                 </select>
                 <span asp-validation-for="PatientMaritalStatus" class="text-danger"></span>
             </div>
-            <div class="form-group"
+            <div class="form-group">
                 <label asp-for="LabTestsIds" class="control-label" >Choose Lab Tests</label>
                 @foreach(var labTest in @Model.LabTests)
                 {
@@ -72,7 +72,6 @@
             <div class="form-group">
                 <label asp-for="DoctorId" class="control-label">Doctor</label>
                 <select asp-for="DoctorId"
-                        asp-va
                         asp-items="@Model.Doctors"
                         class="form-control">
                     <option value="">Select The Doctor</option>
