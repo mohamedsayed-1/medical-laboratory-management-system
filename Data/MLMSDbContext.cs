@@ -9,12 +9,12 @@ namespace Medical_Laboratory_Management_System.Data
         {
             
         }
-        DbSet<Patient> Patients { get; set; }
-        DbSet<Doctor> Doctors { get; set; }
-        DbSet<LabTest> LabTests { get; set; }
-        DbSet<Appointment> Appointments { get; set; }
-        DbSet<RequestedLabTest> RequestedLabTests { get; set; }
-        DbSet<LabTestResult> LabTestResults { get; set; }
+        public DbSet<Patient> Patients { get; set; }
+        public DbSet<Doctor> Doctors { get; set; }
+        public DbSet<LabTest> LabTests { get; set; }
+        public DbSet<Appointment> Appointments { get; set; }
+        public DbSet<RequestedLabTest> RequestedLabTests { get; set; }
+        public DbSet<LabTestResult> LabTestResults { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
