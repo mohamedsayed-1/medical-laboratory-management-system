@@ -28,6 +28,7 @@ namespace Medical_Laboratory_Management_System.Data.Configuration
                 .HasConversion<string>()
                 .HasColumnName("Marital Status")
                 .IsRequired(false);
+            builder.HasIndex(x => x.PhoneNumber).IsUnique();
         }
     }
 }
