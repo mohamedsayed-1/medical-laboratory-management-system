@@ -30,6 +30,16 @@ namespace Medical_Laboratory_Management_System
 
             var app = builder.Build();
 
+
+            // ??? ADD THIS BLOCK (temporarily) ???
+            using (var scope = app.Services.CreateScope())
+            {
+                var context = scope.ServiceProvider.GetRequiredService<MLMSDbContext>();
+                PopulateDB.Seed(context);
+            }
+            // ??? REMOVE THIS BLOCK AFTER RUNNING ONCE ???
+
+
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
             {
