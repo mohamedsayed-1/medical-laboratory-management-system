@@ -4,18 +4,13 @@ A web application for managing patients, doctors, appointments, and lab test res
 
 ## Screenshots
 
-
-<!-- ### Dashboard -->
 ![Home Dashboard](docs/screenshots/home.png)
 
-<!-- ### Scheduling an Appointment -->
 ![Add Appointment](docs/screenshots/appointment-add.png)
 
-<!-- ### Appointment Details & Lab Results -->
 ![Appointment Details](docs/screenshots/appointment-details.png)
 
-<!-- ### Patient / Doctor / Lab Test Management -->
-![Doctor Index](docs/screenshots/appointment-index.png)
+![All Appointments](docs/screenshots/appointment-index.png)
 
 ## Features
 
@@ -46,8 +41,8 @@ A few design decisions worth calling out for anyone reviewing the code:
 
 1. Clone the repository:
    ```
-   git clone <repository-url>
-   cd <repository-folder>
+   git clone https://github.com/mohamedsayed-1/medical-laboratory-management-system.git
+   cd medical-laboratory-management-system
    ```
 2. Update the `MLMS` connection string in `appsettings.json` to point to your local SQL Server instance.
 3. Apply the migrations:
@@ -68,7 +63,7 @@ A few design decisions worth calling out for anyone reviewing the code:
 
 This project was built as a learning and portfolio project while studying ASP.NET Core MVC and Entity Framework Core in depth. This version represents the completed MVC stage.
 
-The next stage is an ASP.NET Core Web API project, building on this domain to explore authentication, authorization, JWT, ASP.NET Core Identity, DTOs, asynchronous operations, and API design more broadly.
+The API version of this project is available here: [medical-laboratory-management-system-API](https://github.com/mohamedsayed-1/medical-laboratory-management-system-API), built with ASP.NET Core Web API, JWT authentication, role-based authorization, and DTOs.
 
 ## Development Process
 
